@@ -1,0 +1,102 @@
+﻿@page "/environment"
+
+@attribute [Authorize]
+<div class="row" style="padding-top:10px">
+    <div class="col-md-4">
+        <h6>Choose your environment:</h6>
+    </div>
+    <div class="col-md-4">
+        <select class="form-control" @onchange="selectedstring" style="width:200px">
+            <option value="">select one</option>
+            @foreach (var env in environments)
+            {
+                <option value="@env">@env</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="row" style="padding-top:20px">
+    <button class="btn btn-primary" @onclick="clickme">Fetch</button>
+</div>
+
+<p>You have selected @a </p>
+
+@if (a == "ENVIRONMENT 1")
+{
+    <table border="1" class="table">
+        <thead>
+            <tr>
+                <th>SCHOOL ID</th>
+                <th>SCHOOL NAME</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+                <tr>
+                    <td>1</td>
+                    <td>Boston</td>
+                </tr>
+        </tbody>
+    </table>
+}
+else if (a == "ENVIRONMENT 2")
+{
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>SCHOOL ID</th>
+                    <th>SCHOOL NAME</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+                <tr>
+                    <td>1</td>
+                    <td>Primary school</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Secondary school</td>
+                </tr>
+                
+            </tbody>
+        </table>
+}
+else
+{
+}
+
+@code {
+
+    string a;
+
+    List<string> environments = new List<string>()
+    {
+       "ENVIRONMENT 1", "ENVIRONMENT 2"
+    };
+    public string SelectedValue = "";
+
+    public void selectedstring(ChangeEventArgs e)
+    {
+        SelectedValue = e.Value.ToString();
+    }
+
+    private void clickme()
+    {
+        if (SelectedValue == "ENVIRONMENT 1")
+        {
+            a = SelectedValue;
+        }
+        else if (SelectedValue == "ENVIRONMENT 2")
+        {
+            a = SelectedValue;
+        }
+        else
+        {
+            a = "select one";
+        }
+
+    }
+    }

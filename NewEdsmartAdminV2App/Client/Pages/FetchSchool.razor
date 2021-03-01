@@ -1,0 +1,138 @@
+﻿@page "/fetch"
+
+@attribute [Authorize]
+
+@inject ISchoolManager schoolmanager
+
+<div class="row" style="padding-top:10px">
+    <div class="col-md-4">
+        <h6>Choose your environment:</h6>
+    </div>
+    <div class="col-md-4">
+        <select class="form-control" @onchange="selectedstring" style="width:200px">
+            <option value="">select one</option>
+            @foreach (var env in environments)
+            {
+                <option value="@env">@env</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="row" style="padding-top:20px">
+    <button class="btn btn-primary" @onclick="clickme">Fetch</button>
+</div>
+
+<p>You have selected @a </p>
+
+@if (schoolENV1Model == null || schoolENV2Model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>School ID</th>
+                <th>School Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (a == "ENVIRONMENT 1" || schoolENV1Model == null)
+            {
+                <tr>
+                    <td colspan="2">
+                        No Records to display
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var s in schoolENV1Model)
+                {
+                    <tr>
+                        <td>@s.SchoolId</td>
+                        <td>@s.SchoolName</td>
+                    </tr>
+                }
+            }
+            @if (a == "ENVIRONMENT 2" || schoolENV2Model == null)
+            {
+                <tr>
+                    <td colspan="2">
+                        No Records to Display
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var s in schoolENV2Model)
+                {
+                    <tr>
+                        <td>@s.SchoolId</td>
+                        <td>@s.SchoolName</td>
+
+                    </tr>
+                }
+            }
+            @if (a == "select one")
+            {
+                <tr>
+                    <td colspan="2">
+                        Choose Any one Environment
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    List<SchoolENV1> schoolENV1Model;
+    List<SchoolENV2> schoolENV2Model;
+    string a;
+
+    List<string> environments = new List<string>()
+{
+       "ENVIRONMENT 1", "ENVIRONMENT 2"
+    };
+    public string SelectedValue = "";
+
+    public void selectedstring(ChangeEventArgs e)
+    {
+        SelectedValue = e.Value.ToString();
+    }
+
+    private void clickme()
+    {
+        if (SelectedValue == "ENVIRONMENT 1")
+        {
+            a = SelectedValue;
+        }
+        else if (SelectedValue == "ENVIRONMENT 2")
+        {
+            a = SelectedValue;
+        }
+        else
+        {
+            a = "select one";
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+      //  schoolENV1Model = await schoolmanager.ListAllENV1();
+
+       schoolENV1Model = await Task.Run(() => schoolmanager.ListAllENV1());
+       schoolENV2Model = await Task.Run(() => schoolmanager.ListAllENV2());
+    }
+
+}
