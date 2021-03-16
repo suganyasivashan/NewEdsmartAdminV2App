@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace NewEdsmartAdminV2App.Client.Model
 {
-    public class SchoolENV1Model
+    public class SchoolModel
     {
-        
-        public string SchoolId { get; set; }
-        public string SchoolName { get; set; }
+
+        public int ID { get; set; }
+        public string Title { get; set; }
     }
 }

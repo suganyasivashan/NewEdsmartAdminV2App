@@ -20,10 +20,16 @@ namespace NewEdsmartAdminV2App.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            builder.Services.AddHttpClient("NewEdsmartAdminV2App.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+      .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                 .CreateClient("NewEdsmartAdminV2App.ServerAPI"));
+
             builder.Services.AddMsalAuthentication(options =>
             {
                 builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
-                options.ProviderOptions.DefaultAccessTokenScopes.Add("api://4aea883f-5e87-4127-bd08-582f19b4ee8f/ClientAPI.Access");
+                options.ProviderOptions.DefaultAccessTokenScopes.Add("api://7944f6a5-f91a-4b65-bc02-88f3cac8b57c/API.Access");
             });
 
             await builder.Build().RunAsync();

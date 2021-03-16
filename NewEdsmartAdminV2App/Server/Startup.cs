@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using NewEdsmartAdminV2App.Client.DataAccess;
-using NewEdsmartAdminV2App.Client.Interface;
+using NewEdsmartAdminV2App.Shared.Interface;
 using NewEdsmartAdminV2App.Client.ConstantClass;
 
 namespace NewEdsmartAdminV2App.Server
@@ -32,14 +32,16 @@ namespace NewEdsmartAdminV2App.Server
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<Client.DataAccess.AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection1")));
             services.AddDbContext<Client.DataAccess.AppContext>(options =>
-                          options.UseSqlServer(
-                              Configuration.GetConnectionString("Connection2")));
+                         options.UseSqlServer(
+                             Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<Client.DataAccess.AppContext>(options =>
+                         options.UseSqlServer(
+                             Configuration.GetConnectionString("Connection2")));
             //School service  
             services.AddScoped<ISchoolManager, SchoolManager>();
             //Register dapper in scope  
-            services.AddScoped<IDrapperManager, DrapperManager>();
+            services.AddScoped<IDrapperManager, DapperManager>();
 
         }
 

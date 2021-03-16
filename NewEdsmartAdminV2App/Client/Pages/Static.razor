@@ -1,4 +1,4 @@
-﻿@page "/environment"
+﻿@page "/static"
 
 @attribute [Authorize]
 <div class="row" style="padding-top:10px">
@@ -16,64 +16,15 @@
 
     </div>
 </div>
-
 <div class="row" style="padding-top:20px">
     <button class="btn btn-primary" @onclick="clickme">Fetch</button>
 </div>
 
 <p>You have selected @a </p>
-
-@if (a == "ENVIRONMENT 1")
-{
-    <table border="1" class="table">
-        <thead>
-            <tr>
-                <th>SCHOOL ID</th>
-                <th>SCHOOL NAME</th>
-            </tr>
-        </thead>
-        <tbody>
-           
-                <tr>
-                    <td>1</td>
-                    <td>Boston</td>
-                </tr>
-        </tbody>
-    </table>
-}
-else if (a == "ENVIRONMENT 2")
-{
-        <table class="table" border="1">
-            <thead>
-                <tr>
-                    <th>SCHOOL ID</th>
-                    <th>SCHOOL NAME</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                <tr>
-                    <td>1</td>
-                    <td>Primary school</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Secondary school</td>
-                </tr>
-                
-            </tbody>
-        </table>
-}
-else
-{
-}
-
 @code {
-
     string a;
-
     List<string> environments = new List<string>()
-    {
+{
        "ENVIRONMENT 1", "ENVIRONMENT 2"
     };
     public string SelectedValue = "";
@@ -99,4 +50,5 @@ else
         }
 
     }
-    }
+
+}
